@@ -1,0 +1,23 @@
+{
+  "name": "angular-seed",
+  "description": "Data visualization for Dutch government spending data",
+  "version": "0.0.0",
+  "homepage": "https://github.com/barmyard/PublicSpendingData",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-loader": "~1.4.0",
+    "bootstrap-css": "^3.3.6",
+    "html5-boilerplate": "~5.2.0",
+    "angular-bootstrap": "^1.2.4",
+    "restangular": "^1.5.2",
+    "angular-ivh-treeview": "^1.0.3",
+    "angularjs-slider": "^2.11.0",
+    "angular-native-dragdrop": "^1.2.1",
+    "highcharts-ng": "^0.0.11",
+    "highcharts": "^4.2.5",
+    "angular-spinner": "^0.8.1",
+    "angular-translate": "^2.11.0"
+  }
+}

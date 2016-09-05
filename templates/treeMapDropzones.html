@@ -1,0 +1,22 @@
+<div class="dimensionList">
+    <div ui-on-drop="droppedInDropzone($data, $channel, 0)" drop-channel= "measure" class="dropzone measure {{setDropZoneColor(0)}}">
+        <a ng-show="dataModel.chartDimensions[0]" href="#"><span ng-click="removeChartDimension(0)" class="glyphicon glyphicon-remove remove"></span></a>
+        <div class="dropzoneName mandatory" translate="size"></div>
+        <h6 translate>{{ dataModel.chartDimensions[0] ? dataModel.chartDimensions[0].label : 'drag' }}</h6>
+    </div>
+    <div ui-on-drop="droppedInDropzone($data, $channel, 1)" drop-channel= "measure" class="dropzone measure {{setDropZoneColor(1)}}">
+        <a ng-show="dataModel.chartDimensions[1]" href="#"><span ng-click="removeChartDimension(1)" class="glyphicon glyphicon-remove remove"></span></a>
+        <div class="dropzoneName" translate="color"></div>
+        <h6 translate>{{ dataModel.chartDimensions[1] ? dataModel.chartDimensions[1].label : 'drag' }}</h6>
+    </div>
+    <div ui-on-drop="droppedInDropzone($data, $channel, 2)" drop-channel= "dimension" class="dropzone dimension {{setDropZoneColor(2)}}">
+        <a ng-show="dataModel.chartDimensions[2]" href="#"><span ng-click="removeChartDimension(2)" class="glyphicon glyphicon-remove remove"></span></a>
+        <div class="dropzoneName mandatory">Level 1</div>
+        <h6 translate>{{ dataModel.chartDimensions[2] ? dataModel.chartDimensions[2].label : 'drag' }}</h6>
+    </div>
+    <div ui-on-drop="droppedInDropzone($data, $channel, 3)" drop-channel= "dimension" class="dropzone dimension {{setDropZoneColor(3)}}">
+        <a ng-show="dataModel.chartDimensions[3]" href="#"><span ng-click="removeChartDimension(3)" class="glyphicon glyphicon-remove remove"></span></a>
+        <div class="dropzoneName">Level 2</div>
+        <h6 translate>{{ dataModel.chartDimensions[3] ? dataModel.chartDimensions[3].label : 'drag' }}</h6>
+    </div>
+</div>

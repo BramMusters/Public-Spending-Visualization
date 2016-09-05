@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Public Spending Visualization</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Load Angular before loading other libraries depending on Angular -->
+    <script src="bower_components/angular/angular.js"></script>
+
+    <script src="bower_components/html5-boilerplate/src/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/angular-ivh-treeview/dist/ivh-treeview.js"></script>
+    <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
+    <script src="bower_components/angular-native-dragdrop/draganddrop.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-spinner/angular-spinner.js"></script>
+    <script src="bower_components/highcharts/highcharts.src.js"></script>
+    <script src="bower_components/highcharts/highcharts-more.src.js"></script>
+    <script src="bower_components/highcharts/modules/heatmap.src.js"></script>
+    <script src="bower_components/highcharts/modules/treemap.js"></script>
+    <script src="http://code.highcharts.com/modules/boost.js"></script>
+    <script src="http://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="bower_components/highcharts/adapters/standalone-framework.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/nl/nl-all-all.js"></script>
+    <script src="http://code.highcharts.com/mapdata/custom/world.js"></script>
+
+    <!-- Own Javascript files-->
+    <script src="app.js"></script>
+    <script src="data/apihandler.js"></script>
+    <script src="data/datamodel.js"></script>
+    <script src="data/ivhtree.js"></script>
+    <script src="data/dataspacectrl.js"></script>
+    <script src="data/workspacectrl.js"></script>
+    <script src="data/dimensionfilter.js"></script>
+    <script src="charts/chartctrl.js"></script>
+    <script src="charts/scatterchart.js"></script>
+    <script src="charts/barchart.js"></script>
+    <script src="charts/treemap.js"></script>
+    <script src="charts/linechart.js"></script>
+    <script src="charts/geomap.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.paper.css">
+    <link rel="stylesheet" href="bower_components/angular-ivh-treeview/dist/ivh-treeview.css">
+    <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<div class="container-fluid fill">
+    <div class="fill" ng-controller="dataSpaceCtrl">
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-primary"
+                        ng-click="dataModel.controlCollapsed = !dataModel.controlCollapsed"
+                        ng-model="dataModel.controlCollapsed" translate={{!dataModel.controlCollapsed}}>
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-primary lang" ng-show="lang == 'en'" ng-click="changeLanguage('nl')">NL</button>
+                <button class="btn btn-primary lang" ng-show="lang == 'nl'" ng-click="changeLanguage('en')">EN</button>
+            </div>
+        </div>
+        <div class="row row-eq-height">
+            <div class="col-md-6 dataspace" ng-show="!dataModel.controlCollapsed">
+                <h5 translate="data_title"></h5>
+                <div ivh-treeview="dataModel.dataSpace"
+                     ivh-treeview-expand-to-depth="0"
+                     ivh-treeview-default-selected-state="false"
+                     ivh-treeview-on-cb-change="updateWorkspaceDimensions(ivhNode, ivhIsSelected, ivhTree)">
+                </div>
+            </div>
+            <div class="col-md-6 workspace" ng-controller="workspaceCtrl" ng-show="!dataModel.controlCollapsed">
+                <h5 translate="work_title"></h5>
+                <div class="normalisation">
+                    <b translate="norm"></b>
+                    <label><input type="radio" name="normalisation" ng-model="dataModel.normalisation"
+                                  ng-change="normalizeCallback()" value="false">
+                    <span translate="norm_no"></span></label>
+                    <label><input type="radio" name="normalisation" ng-model="dataModel.normalisation"
+                                  ng-change="normalizeCallback()" value="true">
+                    <span translate="norm_yes"></span></label>
+                </div>
+                <div class="dimensionfilter" ng-repeat="dim in dataModel.workspaceDimensions">
+                    <dimension-filter dimension="dim"></dimension-filter>
+                </div>
+            </div>
+        </div>
+        <div class="fill" ng-controller="chartCtrl">
+            <div class="row">
+                <div class="col-md-12 chart">
+                    <div class="chartspace">
+                        <h5 translate="chart_title"></h5>
+                        <input type="radio" ng-model="dataModel.chartType" ng-change="resetChartDimensions()"
+                               value="scatterChart">Scatter Chart</input>
+                        <input type="radio" ng-model="dataModel.chartType" ng-change="resetChartDimensions()"
+                               value="treeMap">Tree Map</input>
+                        <input type="radio" ng-model="dataModel.chartType" ng-change="resetChartDimensions()"
+                               value="barChart">Bar Chart</input>
+                        <input type="radio" ng-model="dataModel.chartType" ng-change="resetChartDimensions()"
+                               value="lineChart">Line Chart</input>
+                        <input type="radio" ng-model="dataModel.chartType" ng-change="resetChartDimensions()"
+                               value="geoMap">Geografische kaart</input>
+                        <br>
+                        <input type="checkbox" ng-model="dataModel.aggregateLocation" ng-change="aggregateCallback()">
+                        <span translate="agg_loc"></span><br>
+                        <input type="checkbox" ng-model="dataModel.aggregateTime" ng-change="aggregateCallback()">
+                        <span translate="agg_time"></span>
+                        <div ng-switch="dataModel.chartType">
+                            <div ng-switch-when="scatterChart">
+                                <ng-include src="'templates/scatterDropzones.html'"></ng-include>
+                            </div>
+                            <div ng-switch-when="treeMap">
+                                <ng-include src="'templates/treeMapDropzones.html'"></ng-include>
+                            </div>
+                            <div ng-switch-when="barChart">
+                                <ng-include src="'templates/barDropzones.html'"></ng-include>
+                            </div>
+                            <div ng-switch-when="lineChart">
+                                <ng-include src="'templates/lineDropzones.html'"></ng-include>
+                            </div>
+                            <div ng-switch-when="geoMap">
+                                <ng-include src="'templates/geoDropzones.html'"></ng-include>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary {{chartReady}}" id="generate"
+                                ng-click="chartReady == 'disabled' || showResults()" translate="generate">
+                        </button>
+                        <button class="btn btn-danger" ng-click="clearChart()" translate="clear">
+                        </button>
+                        <uib-alert class="dimensionAlert" ng-repeat="alert in dataModel.alerts" type="{{alert.type}}"
+                                   close="closeAlert($index)">{{alert.text}}
+                        </uib-alert>
+                    </div>
+                </div>
+            </div>
+            <div class="row chart fill">
+                <highchart ng-show="showChart()" class="col-md-12 fill" id="chart1" config="chartConfig"></highchart>
+                <div ng-class="'col-md-' + chartConfig.chartSize" class="fill"
+                     ng-show="showBarChart() && chartConfig.chartSize <= 12">
+                    <button class="btn btn-default sort" ng-click="barChart.sort(0)">Sorteer</button>
+                    <highchart class="fill" config="chartConfig"></highchart>
+                </div>
+                <div ng-class="'col-md-' + chartConfig.chartSize" class="fill"
+                     ng-show="showBarChart() && chartConfig.chartSize <= 6 && chartConfig1.hide == false">
+                    <button class="btn btn-default sort" ng-click="barChart.sort(1)">Sorteer</button>
+                    <highchart class="fill" config="chartConfig1"></highchart>
+                </div>
+                <div ng-class="'col-md-' + chartConfig.chartSize" class="fill"
+                     ng-show="showBarChart() && chartConfig.chartSize <= 4">
+                    <button class="btn btn-default sort" ng-click="barChart.sort(2)">Sorteer</button>
+                    <highchart class="fill" config="chartConfig2"></highchart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

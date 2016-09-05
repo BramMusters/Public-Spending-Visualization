@@ -1,0 +1,6 @@
+<a href="#"><span ng-click="removeDimension(dimension)" class="glyphicon glyphicon-remove"></span></a>
+<span ui-draggable="true" drag="dimension" drag-channel="{{dimension.type}}" class="draggable {{dimension.value.direction}}">
+    {{dimension.label}}
+</span>
+<span class="spinner" us-spinner="{radius:5, length:4, width: 2, opacity: 0}" spinner-on="dimension.slider.options.disabled"></span>
+<rzslider  rz-slider-model="dimension.slider.min" rz-slider-high="dimension.slider.max" rz-slider-options="dimension.slider.options"></rzslider>

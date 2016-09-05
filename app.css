@@ -1,0 +1,148 @@
+/*Full screen*/
+html, body, .fill {
+    min-height: 100%;
+    height: 100%;
+}
+/*Tree style*/
+.ivh-treeview {
+    list-style-type: none;
+}
+
+/*Bootstrap equal height*/
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}
+
+/* Background CSS */
+.dataspace, .workspace, .chartspace {
+    border: solid 1px #e0e0e0;
+    margin: 5px;
+}
+
+/* Dropzone CSS*/
+.dropzone {
+    margin: 5px;
+    width: 200px;
+    display: inline-block;
+    position: relative;
+    border-radius: 3px;
+    color: #FFFFFF;
+}
+h6 {
+    color: #FFFFFF;
+}
+.dropzoneName {
+    text-align: center;
+    margin-bottom: -1em;
+}
+
+.mandatory {
+    font-weight: bold;
+}
+
+.lang {
+    float: right;
+}
+.in {
+    background: #00C851 !important;
+}
+
+.out {
+    background: #ff4444 !important;
+}
+
+.dimension {
+    background: #33b5e5;
+}
+
+.any {
+    background: repeating-linear-gradient(
+            -45deg,
+            #00C851,
+            #00C851 15px,
+            #ff4444 5px,
+            #ff4444 30px,
+            #33b5e5 30px,
+            #33b5e5 45px
+    );
+}
+
+.measure {
+    background: repeating-linear-gradient(
+            -45deg,
+            #00C851,
+            #00C851 15px,
+            #ff4444 15px,
+            #ff4444 30px
+    );
+}
+
+/*Dimension filters*/
+
+.glyphicon-remove {
+    color: #ff4444;
+}
+
+.remove {
+    color: #FFFFFF;
+    position: absolute;
+    left:0;
+}
+
+.spinner {
+    position: relative;
+    padding: 4px 8px;
+}
+
+.draggable {
+    color: #FFFFFF;
+    background-color: #33b5e5;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-weight: 800;
+}
+
+/* Generate Button */
+#generate {
+    background-color: #2196F3;
+}
+.chart {
+    text-align: center;
+}
+
+.dimensionfilter {
+    margin: 5px 0px;
+    padding: 5px;
+    border: solid 1px #e0e0e0;
+    border-radius: 3px;
+    overflow: auto;
+}
+
+rzslider {
+    width: 67%;
+    color: black;
+    float: right;
+}
+
+.wordwrap {
+    white-space: pre-wrap;      /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap;     /* Opera <7 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
+}
+
+.dimensionAlert {
+    text-align: center;
+}
+
+#chart1 {
+    width: 100%;
+}
+
+.sort {
+    margin-bottom: 5px;
+}
